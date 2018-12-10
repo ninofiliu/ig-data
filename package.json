@@ -1,0 +1,11 @@
+{
+  "name": "ig-data",
+  "version": "1.0.0",
+  "description": "Get urls to images and videos of Instagram posts and profile pictures",
+  "main": "dist/main.js",
+  "scripts": { },
+  "keywords": [ "instagram" ],
+  "repository": "github:ninofiliu/ig-data",
+  "author": "Nino Filiu",
+  "license": "ISC"
+}
