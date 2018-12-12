@@ -6,6 +6,14 @@
         "lib": [
             "es6",
             "dom"
-        ]
-    }
+        ],
+        "moduleResolution": "node"
+    },
+    "include": [
+        "./src",
+        "./test"
+    ],
+    "exclude": [
+        "./node_modules"
+    ]
 }
