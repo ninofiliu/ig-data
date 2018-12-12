@@ -1,9 +1,21 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebPackPLugin = require('clean-webpack-plugin');
+
 module.exports = {
     mode: 'development',
-    entry: './index.js',
+    entry: './src/index.js',
     output: {
-        path: `${__dirname}`,
-        filename: 'index.web.js'
+        path: `${__dirname}/dist`,
+        filename: 'bundle.js'
     },
-    target: 'web'
+    target: 'web',
+    plugins: [
+        new CleanWebPackPLugin(['dist']),
+        new HtmlWebpackPlugin({
+            template: `${__dirname}/src/index.html`
+        })
+    ],
+    resolve: {
+        extensions: ['.js', '.html']
+    }
 }
