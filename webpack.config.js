@@ -6,7 +6,9 @@ module.exports = {
     entry: path.resolve(__dirname, 'src/index.ts'),
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'index.js'
+        filename: 'ig-data.js',
+        library: 'ig-data',
+        libraryTarget: 'umd'
     },
     module: {
         rules: [

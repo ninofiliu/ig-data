@@ -2,9 +2,10 @@
   "name": "ig-data",
   "version": "1.0.0",
   "description": "Get urls to images and videos of Instagram posts and profile pictures",
-  "main": "dist/index.js",
+  "main": "dist/ig-data.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "cd test && webpack && start chrome ./index.html"
   },
   "keywords": [
     "instagram"
@@ -13,9 +14,13 @@
   "author": "Nino Filiu",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
     "clean-webpack-plugin": "^1.0.0",
     "ts-loader": "^5.3.1",
     "typescript": "^3.2.2",
-    "webpack": "^4.27.1"
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
   }
 }
