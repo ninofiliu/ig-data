@@ -17,8 +17,6 @@ type Sidecar = {
         }[]
     }
 }
-
-
 type Media = {
     shortcode: string,
     location: null | any,
@@ -27,7 +25,6 @@ type Media = {
         height: number
     }
 } & ( Image | Video | Sidecar );
-
 type PublicationData = {
     entry_data: {
         PostPage: {
@@ -36,8 +33,7 @@ type PublicationData = {
                 [key: string]: any
             },
             [key: string]: any
-        }[],
-        [key: string]: any
+        }[]
     },
     [key: string]: any
 }

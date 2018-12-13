@@ -1,5 +1,6 @@
 module.exports = [
     'publication/image', 
     'publication/video',
-    'publication/sidecar'
+    'publication/sidecar',
+    'publication/private'
 ];

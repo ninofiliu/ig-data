@@ -3,11 +3,13 @@ import casesNames from '../cases-names';
 import publicationImage from './publication/image';
 import publicationVideo from './publication/video';
 import publicationSidecar from './publication/sidecar';
+import publicationPrivate from './publication/private';
 
 casesNames.forEach(name => ({
     'publication/image': publicationImage,
     'publication/video': publicationVideo,
-    'publication/sidecar': publicationSidecar
+    'publication/sidecar': publicationSidecar,
+    'publication/private': publicationPrivate
 })[name](name));
 
 setInterval(() => fetch('http://localhost:3081/done',{method: 'get'})
