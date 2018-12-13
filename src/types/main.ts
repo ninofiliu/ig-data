@@ -10,8 +10,34 @@ type Publication = {
     media: Media | Media[]; // this.sidecar ? Media : Media[];
     location: null | any; // TODO
 }
-type FromShortcode = (shortcode: string) => Promise<Publication>;
-type FromUrl = (url: string) => Promise<Publication>;
-type FromSource = (source: string) => Promise<Publication>;
+type User = {
+    id: string,
+    username: string,
+    fullName: string,
+    biography: string,
+    isPrivate: boolean,
+    isVerified: boolean,
+    profilePicture: string,
+    followers: number,
+    follows: number,
+    externalUrl: string | null,
+}
 
-export { Media, Publication, FromShortcode, FromUrl, FromSource }
+type PublicationFromShortcode = (shortcode: string) => Promise<Publication>;
+type PublicationFromUrl = (url: string) => Promise<Publication>;
+type PublicationFromSource = (source: string) => Promise<Publication>;
+type UserFromUsername = (username: string) => Promise<User>;
+type UserFromUrl = (url: string) => Promise<User>;
+type UserFromSource = (source: string) => Promise<User>;
+
+export {
+    Media,
+    Publication,
+    User,
+    PublicationFromShortcode,
+    PublicationFromUrl,
+    PublicationFromSource,
+    UserFromUsername,
+    UserFromUrl,
+    UserFromSource
+}

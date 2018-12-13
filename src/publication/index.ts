@@ -1,22 +1,22 @@
-import { FromShortcode, FromUrl, FromSource, Media } from '../types/main';
-import * as ig from '../types/ig';
+import { PublicationFromShortcode, PublicationFromUrl, PublicationFromSource, Media } from '../types/main';
 import getMedia from './get-media';
-import { PrivateUserException } from '../types/errors';
+import { privateUserException } from '../types/errors';
+import dataFromSource from '../shared/data-from-source';
+import { nonexistantPublicationException } from '../types/errors';
 
-const fromShortcode: FromShortcode = shortcode => fromUrl(`https://www.instagram.com/p/${shortcode}`);
+const fromShortcode: PublicationFromShortcode = shortcode => fromUrl(`https://www.instagram.com/p/${shortcode}`);
 
-const fromUrl: FromUrl = url => fetch(url)
+const fromUrl: PublicationFromUrl = url => fetch(url)
+    .then(resp => {
+        if (resp.status==404) throw nonexistantPublicationException(url);
+        return resp;
+    })
     .then(resp => resp.text())
     .then(source => fromSource(source));
 
-const fromSource: FromSource = source => {
+const fromSource: PublicationFromSource = source => {
 
-    // page data
-    let html = (new DOMParser()).parseFromString(source, 'text/html');
-    let script = html.getElementsByTagName('script')[4].innerText;
-    script = script.substr(script.indexOf('{'));
-    script = script.substr(0, script.lastIndexOf('}')+1);
-    let data: ig.PublicationData | ig.ProfileData = JSON.parse(script);
+    let data = dataFromSource(source);
 
     // typeguard
     if ('ProfilePage' in data.entry_data) {
@@ -24,7 +24,7 @@ const fromSource: FromSource = source => {
         let isPrivate = data.entry_data.ProfilePage[0].graphql.user.is_private;
         let username = data.entry_data.ProfilePage[0].graphql.user.username;
         if (isPrivate) {
-            throw PrivateUserException(username);
+            throw privateUserException(username);
         }
     }
 

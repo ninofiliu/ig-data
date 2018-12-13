@@ -4,12 +4,20 @@ import publicationImage from './publication/image';
 import publicationVideo from './publication/video';
 import publicationSidecar from './publication/sidecar';
 import publicationPrivate from './publication/private';
+import publicationNonexistant from './publication/nonexistant';
+import userPublic from './user/public';
+import userPrivate from './user/private';
+import userNonexistant from './user/nonexistant';
 
 casesNames.forEach(name => ({
     'publication/image': publicationImage,
     'publication/video': publicationVideo,
     'publication/sidecar': publicationSidecar,
-    'publication/private': publicationPrivate
+    'publication/private': publicationPrivate,
+    'publication/nonexistant': publicationNonexistant,
+    'user/public': userPublic,
+    'user/private': userPrivate,
+    'user/nonexistant': userNonexistant
 })[name](name));
 
 setInterval(() => fetch('http://localhost:3081/done',{method: 'get'})

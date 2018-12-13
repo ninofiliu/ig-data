@@ -1,5 +1,5 @@
 import { Media } from '../types/main';
-import * as ig from '../types/ig/publication';
+import * as ig from '../types/ig';
 
 type GetMediaImage = (data: ig.Media) => Media;
 type GetMediaVideo = (data: ig.Media) => Media;

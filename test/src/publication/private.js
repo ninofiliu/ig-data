@@ -5,11 +5,10 @@ const shortcode = 'BWutphrFVauY7EG7PfEpBG1ZfpvUQqiWCnx6jM0';
 
 const test = name => {
     publication.fromShortcode(shortcode)
-        .then(() => send(name, true))
-        .catch(exception => exception.code=='ig-data:1'
+        .then(() => send(name, false, `Didn't raise a privateUserException`))
+        .catch(reason => /^\[ig-data:1\]/.test(reason)
             ? send(name, true)
-            : send(name, false, `Exception in promise: ${exception}`)
-        );
+            : send(name, false, reason));
 }
 
 export default test;
