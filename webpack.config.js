@@ -1,5 +1,20 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const DtsBundleWebpack = require('dts-bundle-webpack');
 const path = require('path');
+const fs = require('fs');
+const rimraf = require('rimraf');
+
+class CleanPlugin {
+    apply(compiler) {
+        compiler.hooks.done.tap('CleanPlugin', stats => {
+            fs.readdir('dist', (err, files) => err===null && files.forEach(file => {
+                if (!['ig-data.js', 'ig-data.d.ts'].includes(file)) {
+                    let dirname = `./dist/${file}`;
+                    rimraf(dirname, err => err && console.log(err));
+                }
+            }))
+        });
+    }
+}
 
 module.exports = {
     mode: 'development',
@@ -23,6 +38,11 @@ module.exports = {
         extensions: ['.ts']
     },
     plugins: [
-        new CleanWebpackPlugin(['dist'])
+        new DtsBundleWebpack({
+            name: 'ig-data',
+            main: 'dist/index.d.ts',
+            removeSource: true
+        }),
+        new CleanPlugin()
     ]
 }
