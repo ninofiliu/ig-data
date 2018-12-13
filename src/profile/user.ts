@@ -2,8 +2,16 @@ import { UserFromUsername, UserFromUrl, UserFromSource } from '../types/main';
 import dataFromSource from '../shared/data-from-source';
 import { nonexistantUserException } from '../types/errors';
 
+/**
+ * Get user data from username
+ * @param username example: 'ssttaacckkyy'
+ */
 const fromUsername: UserFromUsername = username => fromUrl(`https://www.instagram.com/${username}`);
 
+/**
+ * Get user data from profile url
+ * @param url https://www.instagram.com/<username>
+ */
 const fromUrl: UserFromUrl = url => fetch(url)
     .then(resp => {
         if (resp.status==404) throw nonexistantUserException(url);
@@ -12,6 +20,10 @@ const fromUrl: UserFromUrl = url => fetch(url)
     .then(resp => resp.text())
     .then(source => fromSource(source))
 
+/**
+ * Get user data from source code of profile page
+ * @param source content of https://www.instagram.com/<username>
+ */
 const fromSource: UserFromSource = source => {
 
     let data = dataFromSource(source);

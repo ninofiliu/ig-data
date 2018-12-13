@@ -4,8 +4,16 @@ import { privateUserException } from '../types/errors';
 import dataFromSource from '../shared/data-from-source';
 import { nonexistantPublicationException } from '../types/errors';
 
+/**
+ * Get publication data from its shortcode
+ * @param shortcode the 11 characters in the url of the publication: instagram.com/p/<shortcode>
+ */
 const fromShortcode: PublicationFromShortcode = shortcode => fromUrl(`https://www.instagram.com/p/${shortcode}`);
 
+/**
+ * Get publication data from its url
+ * @param url the url of the publication, ex: https://www.instagram.com/p/BfJX1m1lZ5j/
+ */
 const fromUrl: PublicationFromUrl = url => fetch(url)
     .then(resp => {
         if (resp.status==404) throw nonexistantPublicationException(url);
@@ -14,6 +22,10 @@ const fromUrl: PublicationFromUrl = url => fetch(url)
     .then(resp => resp.text())
     .then(source => fromSource(source));
 
+/**
+ * Get publication data from its source code
+ * @param source example: content of https://www.instagram.com/p/BfJX1m1lZ5j/
+ */
 const fromSource: PublicationFromSource = source => {
 
     let data = dataFromSource(source);
