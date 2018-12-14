@@ -1,12 +1,13 @@
 {
   "name": "ig-data",
-  "version": "1.1.1",
+  "version": "1.1.5",
   "description": "Get urls to images and videos of Instagram posts and profile pictures",
   "main": "dist/ig-data.js",
+  "browser": "dist/ig-data.js",
   "scripts": {
     "build": "webpack",
     "test": "cd test && webpack && node ./server.js",
-    "postinstall": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "instagram"
