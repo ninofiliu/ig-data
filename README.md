@@ -1,6 +1,8 @@
-# ig-download
+# ig-data
 
-Get urls to images and videos of Instagram posts and profile pictures
+Get urls to images and videos of Instagram posts and profile pictures.
+
+By [Nino Filiu](https://ninofiliu.com/hire-me)
 
 ## Installation
 
@@ -12,7 +14,7 @@ npm install ig-data --save
 
 This package is to be used on the client side since it uses, among other things, [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and [DOMParser](https://developer.mozilla.org/en-US/docs/Web/API/DOMParser).
 
-#### Access publication data
+#### Example 1 - access publication data
 
 ```js
 import { publication } from 'ig-data';
@@ -36,7 +38,7 @@ publication.fromUrl('https://www.instagram.com/p/BfJX1m1lZ5j/')
     }
 ```
 
-#### Access user data
+#### Example 2 - access user data
 
 ```js
 import { user } from 'ig-data';
@@ -61,3 +63,11 @@ user.fromUsername('ssttaacckkyy')
 ```
 
 #### Full API
+
+Type definitions and JSDoc are in [`dist/ig-data.d.ts`](https://github.com/ninofiliu/ig-data/blob/master/dist/ig-data.d.ts).
+
+Errors are thrown as `[ig-data:<errcode>] <message>`:
+
+* `[ig-data:1] Username '<username>' has a private account`: Publications of this user can't be accessed publicly, so `publication.fromShortcode` and `publication.fromUrl` both fail. Use `publication.fromSource` instead.
+* `[ig-data:2] User doesn't exist`: a 404 was returned while trying to access a profile page. Either the submitted URL is invalid, or the user doesn't exist.
+* `[ig-data:3] Publication doesn't exist`: same, but for a publication page.
