@@ -1,10 +1,12 @@
 module.exports = [
+    'publication/invalid-url',
+    'publication/nonexistant',
+    'publication/private',
     'publication/image', 
     'publication/video',
     'publication/sidecar',
-    'publication/private',
-    'publication/nonexistant',
-    'user/public',
+    'user/invalid-url',
+    'user/nonexistant',
     'user/private',
-    'user/nonexistant'
+    'user/public',
 ];

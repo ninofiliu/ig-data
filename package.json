@@ -1,6 +1,6 @@
 {
   "name": "ig-data",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Get urls to images and videos of Instagram posts and profile pictures",
   "main": "dist/ig-data.js",
   "browser": "dist/ig-data.js",

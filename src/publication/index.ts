@@ -2,7 +2,7 @@ import { PublicationFromShortcode, PublicationFromUrl, PublicationFromSource, Me
 import getMedia from './get-media';
 import { privateUserException } from '../types/errors';
 import dataFromSource from '../shared/data-from-source';
-import { nonexistantPublicationException } from '../types/errors';
+import { nonexistantPublicationException, invalidUrlException } from '../types/errors';
 
 /**
  * Get publication data from its shortcode
@@ -15,6 +15,10 @@ const fromShortcode: PublicationFromShortcode = shortcode => fromUrl(`https://ww
  * @param url the url of the publication, ex: https://www.instagram.com/p/BfJX1m1lZ5j/
  */
 const fromUrl: PublicationFromUrl = url => fetch(url)
+    .catch(reason => {
+        if (reason=='TypeError: Failed to fetch') throw invalidUrlException(url, 'publication');
+        throw reason;
+    })
     .then(resp => {
         if (resp.status==404) throw nonexistantPublicationException(url);
         return resp;

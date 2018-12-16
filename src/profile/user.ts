@@ -1,6 +1,6 @@
 import { UserFromUsername, UserFromUrl, UserFromSource } from '../types/main';
 import dataFromSource from '../shared/data-from-source';
-import { nonexistantUserException } from '../types/errors';
+import { nonexistantUserException, invalidUrlException } from '../types/errors';
 
 /**
  * Get user data from username
@@ -13,6 +13,10 @@ const fromUsername: UserFromUsername = username => fromUrl(`https://www.instagra
  * @param url https://www.instagram.com/<username>
  */
 const fromUrl: UserFromUrl = url => fetch(url)
+    .catch(reason => {
+        if (reason=='TypeError: Failed to fetch') throw invalidUrlException(url, 'profile');
+        throw reason;
+    })
     .then(resp => {
         if (resp.status==404) throw nonexistantUserException(url);
         return resp;

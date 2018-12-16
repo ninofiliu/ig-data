@@ -10,9 +10,13 @@ const nonexistantPublicationException = url =>
     `[ig-data:3]
     Publication doesn't exist
     ${url}`;
+const invalidUrlException = (url, type) =>
+    `[ig-data:4]
+    Invalid ${type} url '${url}'`;
 
 export {
     privateUserException,
     nonexistantUserException,
-    nonexistantPublicationException
+    nonexistantPublicationException,
+    invalidUrlException
 }
