@@ -14,7 +14,7 @@
     "main": "./dist/main.js",
     "browser": "./dist/browser.js",
     "scripts": {
-        "build": "webpack",
+        "build": "webpack && rimraf ./dist/declarations",
         "test": "mocha",
         "prepublishOnly": "npm run build"
     },

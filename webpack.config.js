@@ -21,7 +21,8 @@ const common = {
     plugins: [
         new DtsBundleWebpack({
             name: 'ig-data',
-            main: './dist/index.d.ts'
+            main: './dist/declarations/index.d.ts',
+            out: `${__dirname}/dist/ig-data.d.ts`
         })
     ],
     resolve: {
