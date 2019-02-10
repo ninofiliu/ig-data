@@ -1,3 +1,5 @@
+const DtsBundleWebpack = require('dts-bundle-webpack');
+
 const common = {
     entry: './src/index.ts',
     externals: {},
@@ -16,6 +18,12 @@ const common = {
         library: 'ig-data',
         libraryTarget: 'umd'
     },
+    plugins: [
+        new DtsBundleWebpack({
+            name: 'ig-data',
+            main: './dist/index.d.ts'
+        })
+    ],
     resolve: {
         extensions: ['.js', '.ts']
     }

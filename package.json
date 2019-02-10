@@ -15,9 +15,11 @@
     "browser": "./dist/browser.js",
     "scripts": {
         "build": "webpack",
+        "test": "mocha",
         "prepublishOnly": "npm run build"
     },
     "devDependencies": {
+        "dts-bundle-webpack": "^1.0.2",
         "mocha": "^5.2.0",
         "ts-loader": "^5.3.3",
         "typescript": "^3.3.3",
