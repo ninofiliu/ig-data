@@ -1,9 +1,8 @@
 import { PublicationFromShortcode, PublicationFromUrl, PublicationFromSource, Media } from '../types/main';
 import getMedia from './get-media';
-import { privateUserException } from '../types/errors';
 import dataFromSource from '../shared/data-from-source';
-import { nonexistantPublicationException, invalidUrlException } from '../types/errors';
 import http from '../http';
+import IgDataError, { IgDataErrorCode } from '../types/error';
 
 /**
  * Get publication data from its shortcode
@@ -15,17 +14,18 @@ const fromShortcode: PublicationFromShortcode = shortcode => fromUrl(`https://ww
  * Get publication data from its url
  * @param url the url of the publication, ex: https://www.instagram.com/p/BfJX1m1lZ5j/
  */
-const fromUrl: PublicationFromUrl = url => http(url)
-    .catch(reason => {
-        if (reason=='TypeError: Failed to fetch') throw invalidUrlException(url, 'publication');
-        throw reason;
-    })
-    .then(resp => {
-        if (resp.status==404) throw nonexistantPublicationException(url);
-        return resp;
-    })
-    .then(resp => resp.text())
-    .then(source => fromSource(source));
+const fromUrl: PublicationFromUrl = url => {
+    if (!/^https:\/\/(www.)?instagram.com\/p\/[a-zA-Z0-9\-_]*/.test(url)) {
+        throw new IgDataError(IgDataErrorCode.INVALID_URL, {url});
+    }
+    return http(url)
+        .then(resp => {
+            if (resp.status==404) throw new IgDataError(IgDataErrorCode.NONEXISTANT_PUBLICATION, {url})
+            return resp;
+        })
+        .then(resp => resp.text())
+        .then(source => fromSource(source));
+}
 
 /**
  * Get publication data from its source code
@@ -40,9 +40,7 @@ const fromSource: PublicationFromSource = source => {
         // check if private
         let isPrivate = data.entry_data.ProfilePage[0].graphql.user.is_private;
         let username = data.entry_data.ProfilePage[0].graphql.user.username;
-        if (isPrivate) {
-            throw privateUserException(username);
-        }
+        if (isPrivate) throw new IgDataError(IgDataErrorCode.PRIVATE_USER, {username});
     }
 
     // typeguard

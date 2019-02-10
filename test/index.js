@@ -7,14 +7,14 @@ describe('Publications', () => {
             await igdata.publication.fromUrl('https://www.youtube.com/watch?v=2mKDvp7MavQ');
             throw new Error('Should throw error');
         } catch(err) {
-            if (!err.toString().includes('[ig-data:4]')) throw err;
+            assert.equal(err.code, 'INVALID_URL');
         }
     }),
     it('Should detect private users', async () => {
         try {
             await igdata.publication.fromUrl('https://www.instagram.com/p/BWutphrFVauY7EG7PfEpBG1ZfpvUQqiWCnx6jM0/');
         } catch(err) {
-            if (!err.toString().includes('[ig-data:1]')) throw err;
+            assert.equal(err.code, 'PRIVATE_USER');
         }
     }),
     it('Should get image data', async () => {
@@ -40,7 +40,7 @@ describe('Profile', () => {
             await igdata.user.fromUrl('https://www.youtube.com/watch?v=XzmnM2PLPfs&index=49&list=LL1gxAMswILp7OOrwj-OiFQQ');
             throw new Error('Should throw error');
         } catch(err) {
-            if (!err.toString().includes('[ig-data:4]')) throw err;
+            assert.equal(err.code, 'INVALID_URL');
         }
     }),
     it('Should detect nonexistant users', async () => {
@@ -48,7 +48,7 @@ describe('Profile', () => {
             await igdata.user.fromUsername(''+Math.random());
             throw new Error('Should throw error');
         } catch(err) {
-            if (!err.toString().includes('[ig-data:2]')) throw err;
+            assert.equal(err.code, 'NONEXISTANT_USER');
         }
     }),
     it('Should get public user infos', async () => {

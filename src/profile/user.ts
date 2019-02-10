@@ -1,6 +1,6 @@
 import { UserFromUsername, UserFromUrl, UserFromSource } from '../types/main';
 import dataFromSource from '../shared/data-from-source';
-import { nonexistantUserException, invalidUrlException } from '../types/errors';
+import IgDataError, { IgDataErrorCode } from '../types/error';
 import http from '../http';
 
 /**
@@ -13,17 +13,18 @@ const fromUsername: UserFromUsername = username => fromUrl(`https://www.instagra
  * Get user data from profile url
  * @param url https://www.instagram.com/<username>
  */
-const fromUrl: UserFromUrl = url => http(url)
-    .catch(reason => {
-        if (reason=='TypeError: Failed to fetch') throw invalidUrlException(url, 'profile');
-        throw reason;
-    })
-    .then(resp => {
-        if (resp.status==404) throw nonexistantUserException(url);
-        return resp;
-    })
-    .then(resp => resp.text())
-    .then(source => fromSource(source))
+const fromUrl: UserFromUrl = url => {
+    if (!/^https:\/\/(www.)?instagram.com\/[a-zA-Z0-9\._]*/.test(url)) {
+        throw new IgDataError(IgDataErrorCode.INVALID_URL, {url});
+    }
+    return http(url)
+        .then(resp => {
+            if (resp.status==404) throw new IgDataError(IgDataErrorCode.NONEXISTANT_USER, {url});
+            return resp;
+        })
+        .then(resp => resp.text())
+        .then(source => fromSource(source));
+}
 
 /**
  * Get user data from source code of profile page
