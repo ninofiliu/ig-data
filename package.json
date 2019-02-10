@@ -1,7 +1,7 @@
 {
     "name": "ig-data",
     "description": "Get urls to images and videos of Instagram posts and profile pictures",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "keywords": [
         "instagram"
     ],
@@ -13,6 +13,7 @@
     ],
     "main": "./dist/main.js",
     "browser": "./dist/browser.js",
+    "types": "./dist/ig-data.d.ts",
     "scripts": {
         "build": "webpack && rimraf ./dist/declarations",
         "test": "mocha",
