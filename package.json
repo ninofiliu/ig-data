@@ -1,32 +1,31 @@
 {
-  "name": "ig-data",
-  "version": "1.1.7",
-  "description": "Get urls to images and videos of Instagram posts and profile pictures",
-  "main": "dist/ig-data.js",
-  "browser": "dist/ig-data.js",
-  "scripts": {
-    "build": "webpack",
-    "test": "cd test && webpack && node ./server.js",
-    "prepublishOnly": "npm run build"
-  },
-  "keywords": [
-    "instagram"
-  ],
-  "repository": "github:ninofiliu/ig-data",
-  "author": "Nino Filiu",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/cli": "^7.2.0",
-    "@babel/core": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
-    "clean-webpack-plugin": "^1.0.0",
-    "copy-webpack-plugin": "^4.6.0",
-    "dts-bundle-webpack": "^1.0.2",
-    "html-webpack-plugin": "^3.2.0",
-    "rimraf": "^2.6.2",
-    "ts-loader": "^5.3.1",
-    "typescript": "^3.2.2",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2"
-  }
+    "name": "ig-data",
+    "description": "Get urls to images and videos of Instagram posts and profile pictures",
+    "version": "1.1.8",
+    "keywords": [
+        "instagram"
+    ],
+    "repository": "github:ninofiliu/ig-data",
+    "author": "Nino Filiu",
+    "license": "ISC",
+    "files": [
+        "dist"
+    ],
+    "main": "./dist/main.js",
+    "browser": "./dist/browser.js",
+    "scripts": {
+        "build": "webpack",
+        "prepublishOnly": "npm run build"
+    },
+    "devDependencies": {
+        "mocha": "^5.2.0",
+        "ts-loader": "^5.3.3",
+        "typescript": "^3.3.3",
+        "webpack": "^4.29.3",
+        "webpack-cli": "^3.2.3"
+    },
+    "dependencies": {
+        "dom-parser": "^0.1.5",
+        "node-fetch": "^2.3.0"
+    }
 }

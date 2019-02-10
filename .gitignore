@@ -1,3 +1,2 @@
-data/*
-node_modules/*
-test/dist/*
+dist
+node_modules

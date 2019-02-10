@@ -1,48 +1,44 @@
-const DtsBundleWebpack = require('dts-bundle-webpack');
-const path = require('path');
-const fs = require('fs');
-const rimraf = require('rimraf');
-
-class CleanPlugin {
-    apply(compiler) {
-        compiler.hooks.done.tap('CleanPlugin', stats => {
-            fs.readdir('dist', (err, files) => err===null && files.forEach(file => {
-                if (!['ig-data.js', 'ig-data.d.ts'].includes(file)) {
-                    let dirname = `./dist/${file}`;
-                    rimraf(dirname, err => err && console.log(err));
-                }
-            }))
-        });
-    }
-}
-
-module.exports = {
+const common = {
+    entry: './src/index.ts',
+    externals: {},
     mode: 'development',
-    entry: path.resolve(__dirname, 'src/index.ts'),
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'ig-data.js',
-        library: 'ig-data',
-        libraryTarget: 'umd'
-    },
     module: {
         rules: [
             {
+                exclude: /node_modules/,
                 test: /\.ts$/,
-                use: 'ts-loader',
-                exclude: /node_modules/
+                use: ['ts-loader']
             }
         ]
     },
-    resolve: {
-        extensions: ['.ts']
+    output: {
+        path: `${__dirname}/dist`,
+        library: 'ig-data',
+        libraryTarget: 'umd'
     },
-    plugins: [
-        new DtsBundleWebpack({
-            name: 'ig-data',
-            main: 'dist/index.d.ts',
-            removeSource: true
-        }),
-        new CleanPlugin()
-    ]
+    resolve: {
+        extensions: ['.js', '.ts']
+    }
 }
+
+// builds a CommonJS module
+const main = {
+    ...common,
+    output: {
+        ...common.output,
+        filename: 'main.js'
+    },
+    target: 'node'
+}
+
+// builds an ES module
+const browser = {
+    ...common,
+    output: {
+        ...common.output,
+        filename: 'browser.js'
+    },
+    target: 'web'
+}
+
+module.exports = [main, browser];
